@@ -53,14 +53,14 @@ class Tree {
         return;
       }
       if (value > node.data) {
-        if (node.right === null || node.right === undefined) {
+        if (node.right === null) {
           node.right = new Node(value);
           return;
         }
         recursiveNullSearch(value, node.right);
       }
       if (value < node.data) {
-        if (node.left === null || node.left === undefined) {
+        if (node.left === null) {
           node.left = new Node(value);
           return;
         }
@@ -69,6 +69,76 @@ class Tree {
     }
 
     recursiveNullSearch(value, node);
+  }
+
+  deleteItem(value) {
+    function _findSmallest(node, parent = null) {
+      if (node.left === null) {
+        return { smallest: node, parent: parent };
+      }
+      return _findSmallest(node.left, node);
+    }
+
+    function _deleteNode(node, parent, value) {
+      if (node === null) return;
+
+      if (value < node.data) {
+        _deleteNode(node.left, node, value);
+      } else if (value > node.data) {
+        _deleteNode(node.right, node, value);
+      } else {
+        // Case 1: No children
+        if (node.left === null && node.right === null) {
+          if (parent === null) {
+            this.root = null;
+          } else if (parent.left === node) {
+            parent.left = null;
+          } else {
+            parent.right = null;
+          }
+        }
+        // Case 2: One child
+        else if (node.left === null) {
+          if (parent === null) {
+            this.root = node.right;
+          } else if (parent.left === node) {
+            parent.left = node.right;
+          } else {
+            parent.right = node.right;
+          }
+        } else if (node.right === null) {
+          if (parent === null) {
+            this.root = node.left;
+          } else if (parent.left === node) {
+            parent.left = node.left;
+          } else {
+            parent.right = node.left;
+          }
+        }
+        // Case 3: Two children
+        else {
+          let { smallest, parent: smallestParent } = _findSmallest(node.right);
+
+          if (smallestParent !== node) {
+            smallestParent.left = smallest.right;
+          }
+
+          smallest.left = node.left;
+          smallest.right =
+            node.right !== smallest ? node.right : smallest.right;
+
+          if (parent === null) {
+            this.root = smallest;
+          } else if (parent.left === node) {
+            parent.left = smallest;
+          } else {
+            parent.right = smallest;
+          }
+        }
+      }
+    }
+
+    _deleteNode(this.root, null, value);
   }
 }
 
