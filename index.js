@@ -158,6 +158,26 @@ class Tree {
     }
     return _find(value, this.root);
   }
+
+  levelOrder(callback) {
+    if (!callback) {
+      throw console.error("Please enter callback function");
+    }
+    const queue = [];
+    let node = this.root;
+    queue.push(node);
+    while (queue.length > 0) {
+      node = queue.shift();
+      callback(node);
+
+      if (node.left !== null) {
+        queue.push(node.left);
+      }
+      if (node.right !== null) {
+        queue.push(node.right);
+      }
+    }
+  }
 }
 
 //
@@ -176,5 +196,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const treeExample = new Tree([1, 7, 4, 23, 8, 9, 4]);
-console.log(treeExample.find(8));
-prettyPrint(treeExample.root);
+treeExample.levelOrder();
+// console.log(treeExample.find(8));
+// prettyPrint(treeExample.root);
