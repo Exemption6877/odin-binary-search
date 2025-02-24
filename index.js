@@ -178,6 +178,21 @@ class Tree {
       }
     }
   }
+
+  inOrder(callback) {
+    if (!callback) {
+      throw console.error("Please enter callback function");
+    }
+    function _inOrder(node) {
+      if (node === null) {
+        return;
+      }
+      _inOrder(node.left);
+      callback(node);
+      _inOrder(node.right);
+    }
+    _inOrder(this.root);
+  }
 }
 
 //
@@ -196,6 +211,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const treeExample = new Tree([1, 7, 4, 23, 8, 9, 4]);
-treeExample.levelOrder();
+treeExample.inOrder(console.log);
 // console.log(treeExample.find(8));
-// prettyPrint(treeExample.root);
+prettyPrint(treeExample.root);
