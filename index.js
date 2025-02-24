@@ -12,6 +12,24 @@ class Tree {
   }
 
   buildTree(array) {
+    function sortArray(parseArray) {
+      const sortedArray = parseArray.sort((a, b) => a - b);
+      const noDuplicates = [];
+
+      noDuplicates.push(sortedArray[0]);
+      for (let i = 1; i < sortedArray.length; i++) {
+        if (sortedArray[i] === sortedArray[i - 1]) {
+          continue;
+        }
+        noDuplicates.push(sortedArray[i]);
+      }
+
+      return noDuplicates;
+    }
+
+    const sortedArray = sortArray(array);
+    console.log(sortedArray);
+
     function recursiveBuild(parseArray) {
       if (parseArray.length === 0) return null;
 
@@ -24,7 +42,7 @@ class Tree {
       return node;
     }
 
-    return recursiveBuild(array);
+    return recursiveBuild(sortedArray);
   }
 }
 
