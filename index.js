@@ -181,7 +181,7 @@ class Tree {
 
   inOrder(callback) {
     if (!callback) {
-      throw console.error("Please enter callback function");
+      throw new Error("Please enter callback function");
     }
     function _inOrder(node) {
       if (node === null) {
@@ -192,6 +192,36 @@ class Tree {
       _inOrder(node.right);
     }
     _inOrder(this.root);
+  }
+
+  preOrder(callback) {
+    if (!callback) {
+      throw new Error("Please enter callback function");
+    }
+    function _preOrder(node) {
+      if (node === null) {
+        return;
+      }
+      callback(node);
+      _preOrder(node.left);
+      _preOrder(node.right);
+    }
+    _preOrder(this.root);
+  }
+
+  postOrder(callback) {
+    if (!callback) {
+      throw new Error("Please enter callback function");
+    }
+    function _postOrder(node) {
+      if (node === null) {
+        return;
+      }
+      _postOrder(node.left);
+      _postOrder(node.right);
+      callback(node);
+    }
+    _postOrder(this.root);
   }
 }
 
@@ -211,6 +241,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const treeExample = new Tree([1, 7, 4, 23, 8, 9, 4]);
-treeExample.inOrder(console.log);
+// treeExample.preOrder(console.log);
 // console.log(treeExample.find(8));
 prettyPrint(treeExample.root);
