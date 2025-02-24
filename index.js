@@ -44,6 +44,32 @@ class Tree {
 
     return recursiveBuild(sortedArray);
   }
+
+  // assuming that the tree is not empty
+  insert(value) {
+    const node = this.root;
+    function recursiveNullSearch(value, node) {
+      if (value === node.data) {
+        return;
+      }
+      if (value > node.data) {
+        if (node.right === null || node.right === undefined) {
+          node.right = new Node(value);
+          return;
+        }
+        recursiveNullSearch(value, node.right);
+      }
+      if (value < node.data) {
+        if (node.left === null || node.left === undefined) {
+          node.left = new Node(value);
+          return;
+        }
+        recursiveNullSearch(value, node.left);
+      }
+    }
+
+    recursiveNullSearch(value, node);
+  }
 }
 
 //
@@ -62,4 +88,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const treeExample = new Tree([1, 7, 4, 23, 8, 9, 4]);
+treeExample.insert(5);
 prettyPrint(treeExample.root);
