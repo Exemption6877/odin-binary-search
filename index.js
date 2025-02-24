@@ -28,7 +28,6 @@ class Tree {
     }
 
     const sortedArray = sortArray(array);
-    console.log(sortedArray);
 
     function recursiveBuild(parseArray) {
       if (parseArray.length === 0) return null;
@@ -72,19 +71,19 @@ class Tree {
   }
 
   deleteItem(value) {
-    function _findSmallest(node, parent = null) {
+    const _findSmallest = (node, parent = null) => {
       if (node.left === null) {
         return { smallest: node, parent: parent };
       }
       return _findSmallest(node.left, node);
-    }
+    };
 
-    function _deleteNode(node, parent, value) {
+    const _deleteNode = (node, parent, value) => {
       if (node === null) return;
 
-      if (value < node.data) {
+      if (value < node.value) {
         _deleteNode(node.left, node, value);
-      } else if (value > node.data) {
+      } else if (value > node.value) {
         _deleteNode(node.right, node, value);
       } else {
         // Case 1: No children
@@ -136,9 +135,28 @@ class Tree {
           }
         }
       }
-    }
+    };
 
     _deleteNode(this.root, null, value);
+  }
+
+  find(value) {
+    function _find(value, node) {
+      if (node === null) {
+        return null;
+      }
+
+      if (node.data === value) {
+        return node;
+      }
+
+      if (value > node.data) {
+        return _find(value, node.right);
+      } else {
+        return _find(value, node.left);
+      }
+    }
+    return _find(value, this.root);
   }
 }
 
@@ -158,5 +176,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const treeExample = new Tree([1, 7, 4, 23, 8, 9, 4]);
-treeExample.insert(5);
+console.log(treeExample.find(8));
 prettyPrint(treeExample.root);
