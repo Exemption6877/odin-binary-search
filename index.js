@@ -223,6 +223,17 @@ class Tree {
     }
     _postOrder(this.root);
   }
+
+  height(node) {
+    if (node === null) {
+      return -1;
+    }
+
+    let left = this.height(node.left);
+    let right = this.height(node.right);
+
+    return 1 + Math.max(left, right);
+  }
 }
 
 //
