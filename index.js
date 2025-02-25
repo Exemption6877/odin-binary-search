@@ -235,7 +235,6 @@ class Tree {
     return 1 + Math.max(left, right);
   }
 
-  // level order is logical for this
   depth(node) {
     if (node === null) {
       return -1;
@@ -296,6 +295,14 @@ class Tree {
   }
 }
 
+function randomNumbers(n) {
+  const randomArray = [];
+  while (randomArray.length <= n) {
+    randomArray.push(Math.floor(Math.random() * 100));
+  }
+  return randomArray;
+}
+
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null || node === undefined) {
     return;
@@ -309,14 +316,33 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-const treeExample = new Tree([1, 7, 4, 23, 8, 9, 4]);
-// console.log(treeExample.depth(treeExample.root.left));
-// treeExample.preOrder(console.log);
-// console.log(treeExample.find(8));
-console.log(treeExample.isBalanced());
+const treeExample = new Tree(randomNumbers(10));
 
-treeExample.insert(22);
-treeExample.insert(2);
+/*
+These check if isBalanced() outputs correctly.
+Checks if rebalance() does its job correctly.
+
 prettyPrint(treeExample.root);
-console.log(treeExample.rebalance());
+console.log(treeExample.isBalanced());
+treeExample.insert(130);
+treeExample.insert(140);
+treeExample.insert(162);
+treeExample.insert(153);
+treeExample.insert(143);
+treeExample.insert(188);
+treeExample.insert(1443);
 prettyPrint(treeExample.root);
+console.log(treeExample.isBalanced());
+treeExample.rebalance();
+prettyPrint(treeExample.root);
+console.log(treeExample.isBalanced());
+*/
+
+/*
+Prints out in corresponded order.
+
+console.log(treeExample.levelOrder());
+console.log(treeExample.inOrder());
+console.log(treeExample.postOrder());
+console.log(treeExample.preOrder());
+*/
