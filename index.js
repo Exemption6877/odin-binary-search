@@ -234,6 +234,34 @@ class Tree {
 
     return 1 + Math.max(left, right);
   }
+
+  // level order is logical for this
+  depth(node) {
+    if (node === null) {
+      return -1;
+    }
+
+    function recursiveSet(nodeSet, depth) {
+      if (nodeSet === null) {
+        return -1;
+      }
+      if (nodeSet === node) {
+        return depth;
+      }
+
+      let left = recursiveSet(nodeSet.left, depth + 1);
+      if (left !== -1) {
+        return left;
+      }
+      let right = recursiveSet(nodeSet.right, depth + 1);
+      if (right !== -1) {
+        return right;
+      }
+      return -1;
+    }
+
+    return recursiveSet(this.root, 0);
+  }
 }
 
 //
@@ -252,6 +280,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const treeExample = new Tree([1, 7, 4, 23, 8, 9, 4]);
+// console.log(treeExample.depth(treeExample.root.left));
 // treeExample.preOrder(console.log);
 // console.log(treeExample.find(8));
 prettyPrint(treeExample.root);
