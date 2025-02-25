@@ -288,6 +288,12 @@ class Tree {
 
     return checkBalance(this.root) !== -1;
   }
+
+  rebalance() {
+    const newArray = [];
+    this.levelOrder((node) => newArray.push(node.data));
+    this.root = this.buildTree(newArray);
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -308,4 +314,9 @@ const treeExample = new Tree([1, 7, 4, 23, 8, 9, 4]);
 // treeExample.preOrder(console.log);
 // console.log(treeExample.find(8));
 console.log(treeExample.isBalanced());
+
+treeExample.insert(22);
+treeExample.insert(2);
+prettyPrint(treeExample.root);
+console.log(treeExample.rebalance());
 prettyPrint(treeExample.root);
