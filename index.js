@@ -262,9 +262,33 @@ class Tree {
 
     return recursiveSet(this.root, 0);
   }
-}
 
-//
+  isBalanced() {
+    function checkBalance(node) {
+      if (node === null) {
+        return 0;
+      }
+
+      let leftHeight = checkBalance(node.left);
+      if (leftHeight === -1) {
+        return -1;
+      }
+
+      let rightHeight = checkBalance(node.right);
+      if (rightHeight === -1) {
+        return -1;
+      }
+
+      if (Math.abs(leftHeight - rightHeight) > 1) {
+        return -1;
+      }
+
+      return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    return checkBalance(this.root) !== -1;
+  }
+}
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null || node === undefined) {
@@ -283,4 +307,5 @@ const treeExample = new Tree([1, 7, 4, 23, 8, 9, 4]);
 // console.log(treeExample.depth(treeExample.root.left));
 // treeExample.preOrder(console.log);
 // console.log(treeExample.find(8));
+console.log(treeExample.isBalanced());
 prettyPrint(treeExample.root);
